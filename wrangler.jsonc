@@ -12,6 +12,7 @@
   
   // These are placeholders for the services we planned in your journey.
   // We will fill in the actual IDs once you create them in the dashboard!
+  /*
   "kv_namespaces": [
     { "binding": "CONFIG", "id": "<KV_ID>" }
   ],
@@ -27,4 +28,5 @@
     "enabled": true,
     "head_sampling_rate": 1
   }
+    */
 }
