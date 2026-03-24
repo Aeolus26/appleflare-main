@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "appleflare-main",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-03-13",
+  
+  // This tells Cloudflare where your compiled React site lives
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  
+  // These are placeholders for the services we planned in your journey.
+  // We will fill in the actual IDs once you create them in the dashboard!
+  "kv_namespaces": [
+    { "binding": "CONFIG", "id": "<KV_ID>" }
+  ],
+  "d1_databases": [
+    { "binding": "DB", "database_name": "appleflare_db", "database_id": "<D1_ID>" }
+  ],
+  "r2_buckets": [
+    { "binding": "BUCKET", "bucket_name": "appleflare-assets" }
+  ],
+  "ai": { "binding": "AI" },
+  
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

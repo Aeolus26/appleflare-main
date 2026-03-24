@@ -1,35 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.tsx
+import { useState } from 'react';
+import './index.css'; // Make sure this matches your CSS file name
 
 function App() {
-  const [count, setCount] = useState(0)
+  // These are State variables. When we update them, the UI updates instantly!
+  const [responseText, setResponseText] = useState("Ready to test the connection to the Cloudflare Global Edge.");
+  const [buttonText, setButtonText] = useState("Ping the Edge Worker");
+  const [statusColor, setStatusColor] = useState("var(--text-muted)");
+  const [isPinging, setIsPinging] = useState(false);
+
+  const pingEdge = async () => {
+    setIsPinging(true);
+    setButtonText("Executing Request...");
+    setStatusColor("var(--text-muted)");
+
+    try {
+      const response = await fetch('/api/hello');
+      const data = await response.text();
+      
+      setResponseText("Response received: " + data);
+      setStatusColor("#10b981"); // Success green
+    } catch (error) {
+      setResponseText("Network Error: Cannot reach the Edge Worker.");
+      setStatusColor("#ef4444"); // Error red
+    } finally {
+      setButtonText("Ping the Edge Worker");
+      setIsPinging(false);
+    }
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <nav>
+        <div className="logo">🍎 appleflare.win</div>
+        <div className="nav-links">
+          <a href="#" className="active">Overview</a>
+          <a href="#">Storage & Media</a>
+          <a href="#">Security & AI</a>
+          <a href="#">About</a>
+        </div>
+        <div className="status-badge">
+          <div className="dot"></div>
+          Edge Online
+        </div>
+      </nav>
+
+      <header className="hero">
+        <h1>Edge Solutions <span>Interactive Lab</span></h1>
+        <p className="hero-subtitle">A live demonstration environment showcasing the full Cloudflare stack. Built for real-world customer scenarios.</p>
+      </header>
+
+      <main className="dashboard-grid">
+        {/* Card 1: Worker Status */}
+        <article className="card" style={{ borderColor: 'var(--primary-orange)', boxShadow: '0 0 20px var(--primary-glow)' }}>
+          <div className="card-header">
+            <div className="icon-box">⚡</div>
+            Edge Compute Status
+          </div>
+          <p style={{ color: statusColor }}>{responseText}</p>
+          <button onClick={pingEdge} disabled={isPinging}>
+            {buttonText}
+          </button>
+        </article>
+
+        {/* Card 2: Object Storage */}
+        <article className="card">
+          <div className="card-header">
+            <div className="icon-box">📦</div>
+            R2 Object Vault
+          </div>
+          <p>Zero-egress object storage for global media delivery. Service binding currently offline.</p>
+          <button className="secondary" disabled>Initialize Bucket</button>
+        </article>
+
+        {/* Card 3: Database */}
+        <article className="card">
+          <div className="card-header">
+            <div className="icon-box">🗄️</div>
+            D1 Relational Data
+          </div>
+          <p>Strictly consistent SQLite database operating at the edge. Awaiting schema deployment.</p>
+          <button className="secondary" disabled>View Logs</button>
+        </article>
+      </main>
+
+      <footer>
+        <p>&copy; 2026 appleflare.win — Built by a Solution Engineer.</p>
+      </footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
