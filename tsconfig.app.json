@@ -5,7 +5,6 @@
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -22,8 +21,10 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
 
+    /* We add "vite/client" here so TS remembers how to import CSS/SVG! */
+    "types": ["@cloudflare/workers-types", "vite/client"]
   },
   "include": ["src"]
 }
