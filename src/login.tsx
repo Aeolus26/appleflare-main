@@ -56,7 +56,7 @@ export default function Login() {
           required 
         />
         
-        <input
+        <input 
           type="password" 
           placeholder="Password" 
           value={password} 
