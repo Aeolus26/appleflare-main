@@ -37,7 +37,7 @@ export default function Login() {
         })
       });
 
-      const data = await response.json();
+      const data = (await response.json()) as AuthResponse;
 
       if (data.success) {
         setMessage("✅ Login Successful!");
