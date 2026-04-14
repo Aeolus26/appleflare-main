@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 
+// 1. We create a contract telling TypeScript exactly what our API returns
+interface AuthResponse {
+  success: boolean;
+  message: string;
+}
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
