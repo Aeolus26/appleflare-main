@@ -1,6 +1,7 @@
 // src/App.tsx
 import { useState } from 'react';
 import './index.css'; // Make sure this matches your CSS file name
+import { Link } from 'react-router-dom';
 
 function App() {
   // These are State variables. When we update them, the UI updates instantly!
@@ -62,6 +63,14 @@ function App() {
             {buttonText}
           </button>
         </article>
+
+        <div style={{ margin: '20px 0' }}>
+          <Link to="/login">
+            <button style={{ padding: '10px 20px', backgroundColor: '#3182ce', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+              Test Security Demo
+            </button>
+          </Link>
+        </div>
 
         {/* Card 2: Object Storage */}
         <article className="card">

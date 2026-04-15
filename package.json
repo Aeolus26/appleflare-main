@@ -12,7 +12,8 @@
   "dependencies": {
     "@marsidev/react-turnstile": "^1.5.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.14.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260317.1",
