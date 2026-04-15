@@ -71,7 +71,7 @@ export default function Login() {
         />
 
         <Turnstile 
-          siteKey="0x4AAAAAAC9RFZIpj0nZz4FY9D-gMbrX8k8" 
+          siteKey="0x4AAAAAAC9RFcJvy9WOY-Hb" 
           onSuccess={(token) => setTurnstileToken(token)}
         />
 
