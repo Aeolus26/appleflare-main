@@ -1,7 +1,6 @@
 // src/App.tsx
 import { useState } from 'react';
 import './index.css'; // Make sure this matches your CSS file name
-import { Turnstile } from '@marsidev/react-turnstile';
 import { Link } from 'react-router-dom';
 
 function App() {
