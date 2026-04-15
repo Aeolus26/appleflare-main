@@ -2,12 +2,7 @@
 import { useState } from 'react';
 import './index.css'; // Make sure this matches your CSS file name
 import { Turnstile } from '@marsidev/react-turnstile';
-
-// The TypeScript contract for your Backend Worker
-interface AuthResponse {
-  success: boolean;
-  message: string;
-}
+import { Link } from 'react-router-dom';
 
 function App() {
   // These are State variables. When we update them, the UI updates instantly!
@@ -33,49 +28,6 @@ function App() {
     } finally {
       setButtonText("Ping the Edge Worker");
       setIsPinging(false);
-    }
-  };
-
-    // --- TURNSTILE STATE VARIABLES ---
-  const [turnstileToken, setTurnstileToken] = useState('');
-  const [turnstileResponseText, setTurnstileResponseText] = useState('Awaiting Turnstile challenge...');
-  const [turnstileStatusColor, setTurnstileStatusColor] = useState('gray');
-  const [isVerifying, setIsVerifying] = useState(false);
-
-  // --- TURNSTILE API FUNCTION ---
-  const testTurnstile = async () => {
-    if (!turnstileToken) return;
-
-    setIsVerifying(true);
-    setTurnstileResponseText("Verifying token with Backend Worker...");
-    setTurnstileStatusColor("blue");
-
-    try {
-      const response = await fetch('https://api.work.appleflare.win/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          username: "demo_user", 
-          password: "demo_password", 
-          token: turnstileToken 
-        })
-      });
-
-      // The TypeScript magic fix:
-      const data = (await response.json()) as AuthResponse;
-
-      if (data.success) {
-        setTurnstileResponseText("✅ Human Verified! API connection successful.");
-        setTurnstileStatusColor("green");
-      } else {
-        setTurnstileResponseText("❌ Bot Detected: " + data.message);
-        setTurnstileStatusColor("red");
-      }
-    } catch (error) {
-      setTurnstileResponseText("❌ Network Error connecting to API Worker.");
-      setTurnstileStatusColor("red");
-    } finally {
-      setIsVerifying(false);
     }
   };
 
@@ -133,37 +85,25 @@ function App() {
           <button className="secondary" disabled>View Logs</button>
         </article>
 
-        {/* Card 4: Turnstile Demo */}
+        {/* Card 4: Turnstile Gateway */}
         <article className="card">
           <div className="card-header">
             <div className="icon-box">🛡️</div>
             Turnstile Security Testing
           </div>
           
-          {/* The actual Turnstile Widget */}
-          <div style={{ margin: '15px 0', display: 'flex', justifyContent: 'center' }}>
-            <Turnstile 
-              siteKey="YOUR_PUBLIC_SITEKEY_HERE" 
-              onSuccess={(token) => {
-                setTurnstileToken(token);
-                setTurnstileResponseText("Token generated. Ready to verify!");
-                setTurnstileStatusColor("green");
-              }}
-            />
-          </div>
-
-          {/* The Status Text */}
-          <p style={{ color: turnstileStatusColor, fontSize: '0.9rem', minHeight: '40px' }}>
-            {turnstileResponseText}
+          <p style={{ minHeight: '60px', marginTop: '10px' }}>
+            Test the Cloudflare application-layer security. This will redirect you to the dedicated secure authentication route.
           </p>
           
-          {/* The Action Button */}
-          <button 
-            onClick={testTurnstile} 
-            disabled={isVerifying || !turnstileToken}
-            style={{ width: '100%', cursor: (!turnstileToken || isVerifying) ? 'not-allowed' : 'pointer' }}>
-            {isVerifying ? "Verifying..." : "Ping Secure Edge"}
-          </button>
+          {/* This Link wraps the button and handles the instant SPA routing! */}
+          <div style={{ marginTop: '15px' }}>
+            <Link to="/login">
+              <button style={{ width: '100%', cursor: 'pointer', backgroundColor: 'var(--primary-orange)', color: 'white', border: 'none' }}>
+                Go to Secure Login Demo
+              </button>
+            </Link>
+          </div>
         </article>
 
       </main>
