@@ -34,6 +34,7 @@ function App() {
       setButtonText("Ping the Edge Worker");
       setIsPinging(false);
     }
+  };
 
     // --- TURNSTILE STATE VARIABLES ---
   const [turnstileToken, setTurnstileToken] = useState('');
@@ -160,8 +161,7 @@ function App() {
           <button 
             onClick={testTurnstile} 
             disabled={isVerifying || !turnstileToken}
-            style={{ width: '100%', cursor: (!turnstileToken || isVerifying) ? 'not-allowed' : 'pointer' }}
-          >
+            style={{ width: '100%', cursor: (!turnstileToken || isVerifying) ? 'not-allowed' : 'pointer' }}>
             {isVerifying ? "Verifying..." : "Ping Secure Edge"}
           </button>
         </article>
