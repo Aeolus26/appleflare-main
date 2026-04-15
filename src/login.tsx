@@ -24,7 +24,7 @@ export default function Login() {
     setMessage("Verifying with API...");
 
     try {
-      const response = await fetch('https://api.work.appleflare.win/login', {
+      const response = await fetch('https://appleflare-turnstile-auth.kaifoong-s-lab.workers.dev', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
