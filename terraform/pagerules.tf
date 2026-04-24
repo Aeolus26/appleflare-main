@@ -7,7 +7,7 @@ resource "cloudflare_ruleset" "blazehack_ssl_override" {
   phase       = "http_config_settings" #This is the specific phase for Configuration Rules
 
   rules {
-    description = "Flexible SSL"
+    description = "Full SSL"
     action      = "set_config"
     enabled     = true
     
@@ -15,7 +15,7 @@ resource "cloudflare_ruleset" "blazehack_ssl_override" {
     expression  = "(http.host eq \"blazehack.work.appleflare.win\")"
     
     action_parameters {
-      ssl = "flexible"
+      ssl = "full"
     }
   }
 }
