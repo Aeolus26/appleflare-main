@@ -3,11 +3,14 @@
 	"name": "appleflare-main",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-03-13",
-	// This tells Cloudflare where your compiled React site lives
+
+	// React build output (Vite → ./dist)
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS"
 	},
+
+	// D1 — relational logs
 	"d1_databases": [
 		{
 			"binding": "appleflare_db",
@@ -16,6 +19,8 @@
 			"remote": true
 		}
 	],
+
+	// KV — global config + counters
 	"kv_namespaces": [
 		{
 			"binding": "CONFIG",
@@ -23,17 +28,20 @@
 			"remote": true
 		}
 	],
-	// These are placeholders for the services we planned in your journey.
-	// We will fill in the actual IDs once you create them in the dashboard!
-	/*
-  "r2_buckets": [
-    { "binding": "BUCKET", "bucket_name": "appleflare-assets" }
-  ],
-  "ai": { "binding": "AI" },
-  
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1
-  }
-    */
+
+	// Workers AI — Phase 3 (Intelligence)
+	"ai": {
+		"binding": "AI"
+	},
+
+	// Observability — per-request logs + metrics
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1
+	}
+
+	// Planned bindings (uncomment when resources exist):
+	// "r2_buckets": [
+	//   { "binding": "BUCKET", "bucket_name": "appleflare-assets" }
+	// ]
 }
