@@ -3,12 +3,24 @@ import { useState } from 'react';
 import './index.css'; // Make sure this matches your CSS file name
 import { Link } from 'react-router-dom';
 
+interface ChatResponse {
+  reply?: string;
+  model?: string;
+  error?: string;
+}
+
 function App() {
-  // These are State variables. When we update them, the UI updates instantly!
+  // --- Edge Compute card state -----------------------------------------------
   const [responseText, setResponseText] = useState("Ready to test the connection to the Cloudflare Global Edge.");
   const [buttonText, setButtonText] = useState("Ping the Edge Worker");
   const [statusColor, setStatusColor] = useState("var(--text-muted)");
   const [isPinging, setIsPinging] = useState(false);
+
+  // --- AI Insight card state -------------------------------------------------
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiReply, setAiReply] = useState('Ask me anything about this Cloudflare demo.');
+  const [aiModel, setAiModel] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
 
   const pingEdge = async () => {
     setIsPinging(true);
@@ -27,6 +39,31 @@ function App() {
     } finally {
       setButtonText("Ping the Edge Worker");
       setIsPinging(false);
+    }
+  };
+
+  const askAI = async () => {
+    const prompt = aiPrompt.trim();
+    if (!prompt) return;
+    setAiLoading(true);
+    setAiReply('Thinking at the edge...');
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: prompt }),
+      });
+      const data = (await res.json()) as ChatResponse;
+      if (data.reply) {
+        setAiReply(data.reply);
+        setAiModel(data.model ?? '');
+      } else {
+        setAiReply(`Error: ${data.error ?? 'unknown'}`);
+      }
+    } catch {
+      setAiReply('Network error talking to the edge brain.');
+    } finally {
+      setAiLoading(false);
     }
   };
 
@@ -103,6 +140,62 @@ function App() {
               </button>
             </Link>
           </div>
+        </article>
+
+        {/* Card 5: AI Insight (Workers AI — Llama 3) */}
+        <article className="card" style={{ gridColumn: 'span 2' }}>
+          <div className="card-header">
+            <div className="icon-box">🧠</div>
+            AI Insight — Workers AI (Llama 3)
+          </div>
+
+          <div
+            style={{
+              minHeight: '100px',
+              maxHeight: '240px',
+              overflowY: 'auto',
+              whiteSpace: 'pre-wrap',
+              padding: '12px',
+              background: 'var(--bg-color)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '8px',
+              marginBottom: '12px',
+              fontSize: '0.95rem',
+              lineHeight: 1.5,
+            }}
+          >
+            {aiReply}
+          </div>
+
+          {aiModel && (
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '-8px' }}>
+              model: <code>{aiModel}</code>
+            </p>
+          )}
+
+          <input
+            type="text"
+            value={aiPrompt}
+            onChange={(e) => setAiPrompt(e.target.value)}
+            placeholder="Ask the edge anything..."
+            disabled={aiLoading}
+            onKeyDown={(e) => { if (e.key === 'Enter') askAI(); }}
+            style={{
+              width: '100%',
+              boxSizing: 'border-box',
+              padding: '10px',
+              marginBottom: '10px',
+              background: 'var(--bg-color)',
+              border: '1px solid var(--border-color)',
+              color: 'var(--text-main)',
+              borderRadius: '8px',
+              fontSize: '0.95rem',
+            }}
+          />
+
+          <button onClick={askAI} disabled={aiLoading || !aiPrompt.trim()}>
+            {aiLoading ? 'Inferring at the edge...' : 'Ask the Edge Brain'}
+          </button>
         </article>
 
       </main>
