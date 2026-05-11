@@ -315,13 +315,30 @@ function ApiExplorer() {
           {/* Petstore — documented API */}
           <div className="shield-api-group">
             <div className="shield-api-group-label">
-              <span className="tag">Schema uploaded</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <span className="tag">Schema uploaded</span>
+                <Link
+                  to="/petstore"
+                  style={{
+                    fontSize: '0.78rem',
+                    color: 'var(--primary-orange)',
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                  }}
+                >
+                  Open Petstore Storefront ↗
+                </Link>
+              </div>
               <span style={{ fontWeight: 700, color: 'var(--text-main)' }}>
                 Petstore — Documented API
               </span>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                 Endpoints appear in Endpoint Management because we uploaded the OpenAPI schema.
                 Schema Validation is active — CF enforces the contract at the edge.
+                Use the storefront above to interact with the API visually.
               </span>
             </div>
             <EndpointList

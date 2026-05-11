@@ -107,11 +107,19 @@ async function handlePetstoreProxy(request: Request, path: string): Promise<Resp
   try {
     const response = await fetch(proxyRequest);
 
-    // Clone response so we can add CORS headers for browser access.
-    const proxied = new Response(response.body, response);
-    proxied.headers.set('Access-Control-Allow-Origin', '*');
-    proxied.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    proxied.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Cookie');
+    // Build a clean response clone — passing the original Response as init
+    // causes the body stream to be consumed twice in some runtimes.
+    // Explicitly copying status, statusText, and headers avoids this.
+    const clonedHeaders = new Headers(response.headers);
+    clonedHeaders.set('Access-Control-Allow-Origin', '*');
+    clonedHeaders.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    clonedHeaders.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Cookie');
+
+    const proxied = new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: clonedHeaders,
+    });
     return proxied;
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Proxy error';
@@ -231,16 +239,20 @@ export async function handleApiShield(
     });
   }
 
-  const path = url.pathname; // e.g. /api/shield/httpbin/ip
+  // Include query string so proxy forwards params like ?status=available
+  const path = url.pathname + url.search; // e.g. /api/shield/petstore/api/v3/pet/findByStatus?status=available
+
+  // Use pathname only (no query string) for routing decisions
+  const pathname = url.pathname;
 
   // Traffic burst
-  if (path === '/api/shield/traffic') {
+  if (pathname === '/api/shield/traffic') {
     return handleTrafficBurst(request);
   }
 
-  // Httpbin simulation
-  if (path.startsWith('/api/shield/httpbin/')) {
-    const sub = path.replace('/api/shield/httpbin', '');
+  // Httpbin simulation — no query string needed for these endpoints
+  if (pathname.startsWith('/api/shield/httpbin/')) {
+    const sub = pathname.replace('/api/shield/httpbin', '');
     if (sub === '/ip')      return handleHttpbinIp(request);
     if (sub === '/headers') return handleHttpbinHeaders(request);
     if (sub === '/uuid')    return handleHttpbinUuid();
@@ -252,8 +264,8 @@ export async function handleApiShield(
     return Response.json({ error: `Unknown httpbin endpoint: ${sub}` }, { status: 404 });
   }
 
-  // Petstore proxy
-  if (path.startsWith('/api/shield/petstore/')) {
+  // Petstore proxy — pass full path including query string
+  if (pathname.startsWith('/api/shield/petstore/')) {
     const petstorePath = path.replace('/api/shield/petstore', '');
     return handlePetstoreProxy(request, petstorePath);
   }

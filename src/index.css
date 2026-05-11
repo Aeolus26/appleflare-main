@@ -189,3 +189,74 @@ footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size:
     padding-bottom: 0.6rem;
     border-bottom: 1px solid var(--border-color);
 }
+
+/* Petstore storefront page */
+.petstore-section {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.petstore-login-bar {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+.petstore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+}
+.petstore-card {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+.petstore-card:hover { transform: translateY(-2px); border-color: var(--primary-orange); box-shadow: 0 4px 16px rgba(246,130,31,0.15); }
+.petstore-card:focus { outline: 2px solid var(--primary-orange); }
+.petstore-card__img {
+    background: var(--surface-color);
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.petstore-card__body { padding: 0.75rem; display: flex; flex-direction: column; gap: 0.35rem; flex-grow: 1; }
+.petstore-card__name { font-weight: 700; font-size: 0.9rem; color: var(--text-main); }
+.petstore-card__category { font-size: 0.75rem; color: var(--text-muted); }
+.petstore-card__footer { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: auto; padding-top: 0.4rem; }
+/* Modal */
+.petstore-modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200;
+    padding: 1rem;
+}
+.petstore-modal {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.petstore-modal__close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: transparent; border: none; color: var(--text-muted);
+    font-size: 1.1rem; cursor: pointer; width: auto; padding: 4px 8px;
+}
+.petstore-modal__close:hover { color: var(--text-main); }
