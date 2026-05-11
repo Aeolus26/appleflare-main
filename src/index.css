@@ -68,3 +68,124 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 button.secondary { background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color); }
 button.secondary:hover:not(:disabled) { background-color: rgba(255,255,255,0.05); }
 footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.875rem; border-top: 1px solid var(--border-color); }
+
+/* Card visibility toggles */
+.card-toggles {
+    max-width: 1200px;
+    margin: 0 auto 1.5rem;
+    padding: 1rem 5%;
+}
+.card-toggles__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+.card-toggles__bulk { display: flex; gap: 0.5rem; }
+.card-toggles__bulk button {
+    width: auto;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+.card-toggles__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+}
+.card-toggles__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-main);
+    font-size: 0.875rem;
+    cursor: pointer;
+    user-select: none;
+}
+.card-toggles__item input[type="checkbox"] {
+    accent-color: var(--primary-orange);
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+/* Tags (used in ApiShieldCard + ApiShieldPage) */
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0; }
+.tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    background: rgba(246,130,31,0.1);
+    color: var(--primary-orange);
+    border: 1px solid rgba(246,130,31,0.25);
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* API Shield page */
+.shield-page { min-height: 100vh; }
+.shield-container { max-width: 1100px; margin: 0 auto; padding: 0 5% 4rem; }
+.shield-section {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.shield-request-box {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+}
+.shield-response-box {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    overflow: auto;
+    max-height: 260px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: var(--text-main);
+    margin: 0;
+}
+.shield-ep-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.15s;
+}
+.shield-ep-btn:hover { border-color: var(--primary-orange); color: var(--text-main); }
+.shield-ep-btn.active { border-color: var(--primary-orange); background: rgba(246,130,31,0.08); color: var(--text-main); }
+.shield-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-main);
+}
+.shield-toggle input { accent-color: var(--primary-orange); }
+.shield-api-group { display: flex; flex-direction: column; gap: 0; }
+.shield-api-group-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border-color);
+}
