@@ -24,6 +24,7 @@ export const CARD_DEFINITIONS = [
   { id: 'turnstile', label: 'Turnstile Security' },
   { id: 'ai', label: 'AI Insight' },
   { id: 'apishield', label: 'API Shield' },
+  { id: 'casb', label: 'CASB — SaaS Security' },
 ] as const;
 
 export type CardId = (typeof CARD_DEFINITIONS)[number]['id'];

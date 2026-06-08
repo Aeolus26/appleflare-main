@@ -11,6 +11,7 @@ import { D1DataCard } from './cards/D1DataCard';
 import { TurnstileCard } from './cards/TurnstileCard';
 import { AIInsightCard } from './cards/AIInsightCard';
 import { ApiShieldCard } from './cards/ApiShieldCard';
+import { CasbCard } from './cards/CasbCard';
 import { useCardVisibility, CARD_DEFINITIONS } from './hooks/useCardVisibility';
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
         {visible.turnstile && <TurnstileCard />}
         {visible.ai && <AIInsightCard />}
         {visible.apishield && <ApiShieldCard />}
+        {visible.casb && <CasbCard />}
       </main>
 
       <footer>
